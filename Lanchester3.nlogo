@@ -15,14 +15,22 @@ reset-ticks
 end
 
 to go
-  ask turtles[ifelse tipoEnfrentamiento = "perseguir" [rt random 180 fd 1 apunta ifelse blanco != nobody
-    [ifelse ip > 0.5 [apunta get_amigo huir][get_amigo apunta pleitear apunta dispara]][fd 1]] [fd 1 apunta ifelse blanco != nobody
-    [ifelse ip > 0.5 [apunta get_amigo huir][get_amigo apunta pleitear apunta dispara]][fd 1]] ]
+  if not any? rojos [ user-message "Ganan los azules" stop ]
+  if not any? azules [ user-message "Ganan los rojos" stop ]
+  ask turtles[ifelse tipoEnfrentamiento = "perseguir" [rt random 180 fd random-float 2 apunta ifelse blanco != nobody
+    [ifelse ip > 0.5 [apunta get_amigo huir][get_amigo apunta pleitear apunta dispara]][fd random-float 1]
+    ]
+    [fd random-float 2 apunta ifelse blanco != nobody
+    [ifelse ip > 0.5 [apunta get_amigo huir][get_amigo apunta pleitear apunta dispara]][fd random-float 1]] ]
   tick
 end
 
 to dispara
-  apunta if random-float 1 > efectividad[ask blanco [die]] apunta
+  apunta if random-float 1 > efectividad[if blanco != nobody [ask blanco [die]]] apunta
+end
+
+to mueve
+
 end
 
 to apunta
@@ -49,13 +57,13 @@ to get_amigo
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-363
-19
-1102
-759
+364
+10
+1021
+668
 -1
 -1
-17.83
+15.83
 1
 10
 1
@@ -77,9 +85,9 @@ ticks
 
 BUTTON
 91
-70
+76
 165
-104
+110
 NIL
 setup
 NIL
@@ -118,7 +126,7 @@ R
 R
 0
 1000
-707.0
+172.0
 1
 1
 NIL
@@ -133,7 +141,7 @@ A
 A
 0
 1000
-707.0
+178.0
 1
 1
 NIL
@@ -148,7 +156,7 @@ V
 V
 0
 10
-4.0
+10.0
 1
 1
 NIL
@@ -172,8 +180,8 @@ SLIDER
 filas
 filas
 0
-5
-5.0
+10
+3.0
 1
 1
 NIL
@@ -188,7 +196,7 @@ E
 E
 0
 1
-0.24
+0.13
 0.01
 1
 NIL
